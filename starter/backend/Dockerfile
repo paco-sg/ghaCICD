@@ -1,14 +1,7 @@
-FROM python:3.10-slim
+FROM python:3.10
 ENV FLASK_RUN_HOST=0.0.0.0
 
 WORKDIR /app
-
-# Install system dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc \
-    libpcre3 \
-    libpcre3-dev \
-    && rm -rf /var/lib/apt/lists/*
 
 # Install pipenv
 RUN pip install --no-cache-dir pipenv
