@@ -145,3 +145,14 @@ jobs:
       
       - name: Deploy to Kubernetes
         run: kustomize build | kubectl apply -f -
+      
+      - name: Verify Deployment
+        run: |
+          echo "=== Checking Deployment Status ==="
+          kubectl get deployments -l app=backend
+          kubectl get pods -l app=backend
+          kubectl get services backend
+          echo "\n=== Waiting for pods to be ready ==="
+          kubectl wait --for=condition=ready pod -l app=backend --timeout=300s || true
+          echo "\n=== Service Details ==="
+          kubectl describe service backend
